@@ -18,3 +18,6 @@ Key Features:
 + Ability to go into "Private mode" for sending messages without your username attached
 + Ability for messages to be deleted by users
 + Ability for Admin to delete messages or ban accounts in cases of misuse or harassment
+
+## Simon Experience
+Thus far, the experience of recreating Simon has not taught me all that much that I didn't already know.  However, it was nice getting more practice with some of HTML5's structural tags that I wasn't super familiar with and haven't used very much in the past.  I look forward to learning more as the semester progresses and I continue to implement more of Simon.
