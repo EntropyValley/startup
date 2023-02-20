@@ -21,3 +21,5 @@ Key Features:
 
 ## Simon Experience
 Thus far, the experience of recreating Simon has not taught me all that much that I didn't already know.  However, it was nice getting more practice with some of HTML5's structural tags that I wasn't super familiar with and haven't used very much in the past.  I look forward to learning more as the semester progresses and I continue to implement more of Simon.
+
+When implementing the Simon stylesheets, I took an alternative approach that tested my knowledge more.  Instead of reviewing the code, I took a basic look at the official version of this stage of Simon and implemented the CSS based on what it needed to look like.  Because I was already good enough with CSS, this challenged me to figure out how to best implement the desired styling without being able to simply look and retype what was already there.  I think this really helped me increase and renew my familiarity with the source material so that I will be better prepared when it comes to working on my startup project.
