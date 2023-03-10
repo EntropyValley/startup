@@ -1,0 +1,30 @@
+#interactionBar {
+    position: fixed;
+    bottom: 56px;
+    width: 100%;
+    padding: 15px;
+    background: var(--bs-dark);
+}
+
+#interactionBar .container {
+    display:flex;
+    gap: 15px;
+}
+
+#messageBox {
+    flex-grow: 1;
+}
+
+#message {
+    resize: none;
+    height: 91px;
+}
+
+#buttons button {
+    display:block;
+    width: 100px;
+}
+
+#buttons button:first-child {
+    margin-bottom: 15px;
+}
