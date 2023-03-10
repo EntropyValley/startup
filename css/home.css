@@ -1,11 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
-    background: #999;
-}
-
 #login {
     position: absolute;
     top: 50%;
