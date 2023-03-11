@@ -7,7 +7,7 @@
     padding: 30px;
     text-align: center;
     color: white;
-    background: #212529;
+    background: var(--bs-dark);
     border-radius: 15px;
 }
  
