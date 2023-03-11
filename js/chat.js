@@ -42,6 +42,9 @@ const createMessageFromInput = () => {
     
     addMessageToDatabase(username, datetime, messageContent, anonymous);
     createMessage(username, datetime, messageContent, {anonymous: anonymous, currentUser: true});
+
+    $('#message').val([]);
+    window.scrollTo(0, document.body.scrollHeight);
 }
 
 // Write current messages from localStorage
@@ -85,3 +88,13 @@ if (currentMessages === null) {
 for (const chat of currentMessages) {
     createMessage(chat.username, chat.datetime, chat.message, {anonymous: chat.anonymous, currentUser: chat.username == currentUser});
 }
+
+window.scrollTo(0, document.body.scrollHeight);
+
+$('#send').click(createMessageFromInput);
+$('#message').keypress((e) => {
+    if (e.which == 13) {
+        createMessageFromInput();
+        return false;
+    }
+});
