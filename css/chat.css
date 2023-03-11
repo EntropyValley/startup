@@ -22,7 +22,7 @@
 
 #buttons button {
     display:block;
-    width: 100px;
+    width: 120px;
 }
 
 #buttons button:first-child {
