@@ -38,7 +38,7 @@ const createMessageFromInput = () => {
     const messageContent = $('#message').val();
     const anonymous = $('#anonymous').hasClass('active');
     const currentDate = new Date();
-    const datetime = `${currentDate.getMonth()+1}/${currentDate.getDate()}/${currentDate.getFullYear()} at ${currentDate.getHours()}:${currentDate.getMinutes()}`;
+    const datetime = `${currentDate.getMonth()+1}/${currentDate.getDate()}/${currentDate.getFullYear()} at ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}`;
     
     addMessageToDatabase(username, datetime, messageContent, anonymous);
     createMessage(username, datetime, messageContent, {anonymous: anonymous, currentUser: true});
