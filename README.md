@@ -26,6 +26,8 @@ When implementing the Simon stylesheets, I took an alternative approach that tes
 
 The service implementation for this application is fairly simple.  On the backend, it mostly consists of basic express setup, two endpoints for syncing scores, and a little bit of javascript that actually handles storing, updating, and pruning those scores.  On the frontend, there were a few basic changes to utilize these API endpoints as well as the random quote and picture requests on the about page.  Overall, it is pretty basic and I feel like I understand what it is doing fairly well.
 
+The database implemetation for Simon is also fairly simple.  I really like how the database module stores all scores and then only requests the top ten scores back from the database instead of manually pruning them like the service implementation did. Ovarall though, this deliverable felt even more simple than the service deliverable.
+
 ## HTML, CSS, and JS Experience
 
 I came into this class already knowing a lot about HTML, CSS, and Javascript, and so there wasn't a whole lot that I learned from these units. However, building this application alongside the practice activities certainly helped me to flush out my skills and remind me of the intricacies of certain aspects of web programming that I haven't had to use in months or years. I think that the most vital lesson I have learned from these last several units is that one really needs to keep practicing and programming frequently in order to not get rusty and start to lose the experience they've gained.
