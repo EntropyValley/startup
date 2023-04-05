@@ -1,12 +1,8 @@
 {
-  "dependencies": {
-    "mongodb": "^5.1.0"
-  },
   "name": "startup",
   "description": "A CS 260 Web Development Project",
   "version": "0.0.3",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/EntropyValley/startup/issues"
   },
-  "homepage": "https://github.com/EntropyValley/startup#readme"
+  "homepage": "https://github.com/EntropyValley/startup#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "mongodb": "^5.2.0",
+    "uuid": "^9.0.0",
+    "ws": "^8.13.0"
+  }
 }
