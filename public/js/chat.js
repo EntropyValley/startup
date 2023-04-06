@@ -1,4 +1,41 @@
-const createMessage = (username, datetime, message, options={anonymous:false, currentUser:false}) => {
+(async () => {
+    let authenticated = false;
+    const username = localStorage.getItem('username');
+
+    if (username) {
+        const usernameField = $('#login-name');
+        usernameField.val(username);
+        const user = await getUser(username);
+        authenticated = user?.authenticated;
+    }
+
+    if (authenticated) {
+        $('#navbar-logout').removeClass('hidden');
+    } else {
+        window.location.href = '/';
+    }
+})();
+
+// Get a user from the server
+async function getUser(username) {
+    const response = await fetch(`/api/user/${username}`);
+
+    if (response.status === 200) {
+        return response.json();
+    }
+
+    return null; // No user
+}
+
+// Logout on navbar button press
+$('#navbar-logout').click(() => {
+    fetch(`/api/auth/logout`, {
+        method: 'delete',
+    }).then(() => (window.location.href = '/'));
+});
+
+// Create a message element in the DOM
+const createMessage = (username, datetime, message, options = { anonymous: false, currentUser: false }) => {
     const messageElement = document.createElement('div');
 
     if (options.anonymous) {
@@ -8,12 +45,12 @@ const createMessage = (username, datetime, message, options={anonymous:false, cu
 
     if (options.currentUser) {
         $(messageElement).addClass('currentUserMessage');
-    }   
-    
+    }
+
     const messageInfo = document.createElement('div');
     messageInfo.textContent = `${username}: ${datetime}`;
     $(messageInfo).addClass('messageInfo').appendTo($(messageElement));
-    
+
     const messageContent = document.createElement('div');
     messageContent.textContent = message;
     $(messageContent).addClass('messageContent').appendTo($(messageElement));
@@ -23,8 +60,9 @@ const createMessage = (username, datetime, message, options={anonymous:false, cu
     return messageElement;
 }
 
+// Add Message to Database
 const addMessageToDatabase = (username, datetime, message, anonymous) => {
-    let currentMessages  = JSON.parse(localStorage.getItem('messages'));
+    let currentMessages = JSON.parse(localStorage.getItem('messages'));
 
     currentMessages.push({
         username: username, datetime: datetime, message: message, anonymous: anonymous
@@ -33,22 +71,23 @@ const addMessageToDatabase = (username, datetime, message, anonymous) => {
     localStorage.setItem('messages', JSON.stringify(currentMessages))
 }
 
+// Get information from Input and create message in DOM / Database
 const createMessageFromInput = () => {
     const username = localStorage.getItem('username');
     const messageContent = $('#message').val();
     const anonymous = $('#anonymous').hasClass('active');
     const currentDate = new Date();
-    const datetime = `${currentDate.getMonth()+1}/${currentDate.getDate()}/${currentDate.getFullYear()} at ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}`;
-    
+    const datetime = `${currentDate.getMonth() + 1}/${currentDate.getDate()}/${currentDate.getFullYear()} at ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}`;
+
     addMessageToDatabase(username, datetime, messageContent, anonymous);
-    createMessage(username, datetime, messageContent, {anonymous: anonymous, currentUser: true});
+    createMessage(username, datetime, messageContent, { anonymous: anonymous, currentUser: true });
 
     $('#message').val([]);
     window.scrollTo(0, document.body.scrollHeight);
 }
 
 // Write current messages from localStorage
-let currentMessages  = JSON.parse(localStorage.getItem('messages'));
+let currentMessages = JSON.parse(localStorage.getItem('messages'));
 let currentUser = localStorage.getItem('username');
 
 if (currentMessages === null) {
@@ -85,12 +124,14 @@ if (currentMessages === null) {
     localStorage.setItem('messages', JSON.stringify(currentMessages))
 }
 
+// Create all currently stored messages
 for (const chat of currentMessages) {
-    createMessage(chat.username, chat.datetime, chat.message, {anonymous: chat.anonymous, currentUser: chat.username == currentUser});
+    createMessage(chat.username, chat.datetime, chat.message, { anonymous: chat.anonymous, currentUser: chat.username == currentUser });
 }
 
 window.scrollTo(0, document.body.scrollHeight);
 
+// Bind Send and Enter to "Send Message"
 $('#send').click(createMessageFromInput);
 $('#message').keypress((e) => {
     if (e.which == 13) {

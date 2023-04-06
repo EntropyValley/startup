@@ -18,24 +18,32 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
+                        <li id="navbar-link-chat" class="nav-item hidden">
                             <a class="nav-link" href="chat.html">Chat</a>
                         </li>
                     </ul>
-                    <a class="btn btn-outline-success me-2" type="button" href="index.html">Login</a>
+                    <a id="navbar-logout" class="btn btn-outline-success me-2 hidden" type="button" href="index.html">Logout</a>
                 </div>
             </div>
         </nav>
 
-        <main id="login" class="container">
-            <p>Login to chat</p>
+        <main id="login" class="container hidden">
+            <p id="login-welcome">Login to Chat</p>
+            <div id="login-error" class="hidden"></div>
             <input id="login-name" type="text" class="form-control mb-3" placeholder="Name" aria-label="Name" name="name" />
-            <div id="login-group" class="input-group">
-                <input id="login-password" type="password" class="form-control" placeholder="Password" aria-label="Password" name="password" />
-                <button id="login-submit" class="btn btn-primary">Login</button>
+            <input id="login-password" type="password" class="form-control" placeholder="Password" aria-label="Password" name="password" />
+            <div id="login-group" class="btn-group">
+                <button id="login-login" class="btn btn-outline-primary">Login</button>
+                <button id="login-create" class="btn btn-outline-primary">Create Account</button>
+            </div>
+        </main>
+
+        <main id="logout" class="container hidden">
+            <p id="logout-welcome">Welcome!</p>
+            <p id="logout-username">Temp Placeholder</p>
+            <div id="logout-group" class="btn-group">
+                <button id="logout-logout" class="btn btn-outline-primary">Logout</button>
+                <button id="logout-continue" class="btn btn-outline-primary">Continue</button>
             </div>
         </main>
 

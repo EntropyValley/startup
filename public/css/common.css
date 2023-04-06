@@ -9,3 +9,7 @@ body {
     padding-top: 56px;
     padding-bottom: 175px;
 }
+
+.hidden {
+    display: none;
+}

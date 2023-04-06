@@ -1,4 +1,4 @@
-#login {
+#login, #logout {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -10,4 +10,23 @@
     background: var(--bs-dark);
     border-radius: 15px;
 }
+
+#login-group, #logout-group {
+    margin-top: 15px;
+    width: 100%;
+}
  
+#login-group .btn, #logout-group .btn {
+    flex-basis: 1em;
+}
+
+#login-welcome, #logout-welcome {
+    font-size: 1.6em;
+}
+
+#login-error {
+    background: darkred;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
