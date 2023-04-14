@@ -159,7 +159,7 @@ $(document).ready(async () => {
     window.scrollTo(0, document.body.scrollHeight);
 
     setTimeout(() => {
-        socket.send(JSON.stringify({ type: 'message_request', num: 30 }));
+        socket.send(JSON.stringify({ type: 'message_request', num: 50 }));
     }, 100)
 
 });
