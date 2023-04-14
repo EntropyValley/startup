@@ -5,9 +5,25 @@
 }
 
 body {
-    background: #999;
     padding-top: 56px;
     padding-bottom: 175px;
+    background: #999;
+}
+
+#background {
+    position: fixed;
+    top: 0;
+    left: -10px;
+    width: calc(100vw + 20px);
+    height: 100vh;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    filter: blur(3px);
+}
+
+.navbar {
+    box-shadow: var(--bs-dark) 0 0 15px;
 }
 
 .hidden {

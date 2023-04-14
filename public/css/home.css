@@ -8,6 +8,7 @@
     text-align: center;
     color: white;
     background: var(--bs-dark);
+    box-shadow: var(--bs-dark) 0 0 15px;
     border-radius: 15px;
 }
 

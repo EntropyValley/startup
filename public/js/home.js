@@ -102,3 +102,13 @@ $('#navbar-logout').click(() => {
         method: 'delete',
     }).then(() => (window.location.href = '/'));
 });
+
+const updateBackground = () => {
+    fetch(`https://picsum.photos/v2/list?page=${Math.floor(Math.random() * 1000)}&limit=1`)
+        .then((resp) => resp.json())
+        .then((data) => {
+            $('#background').css("background", `url(https://picsum.photos/id/${data[0].id}/480/480?grayscale)`);
+        });
+}
+
+updateBackground();

@@ -148,7 +148,19 @@ $('#message').keypress((e) => {
     }
 });
 
+
+const updateBackground = () => {
+    fetch(`https://picsum.photos/v2/list?page=${Math.floor(Math.random() * 1000)}&limit=1`)
+        .then((resp) => resp.json())
+        .then((data) => {
+            $('#background').css("background", `url(https://picsum.photos/id/${data[0].id}/360/360?grayscale)`);
+        });
+}
+
+
 $(document).ready(async () => {
+    updateBackground();
+
     // Start WebSocket Connection
     await configureWebSocket()
 
@@ -160,7 +172,7 @@ $(document).ready(async () => {
 
     setTimeout(() => {
         socket.send(JSON.stringify({ type: 'message_request', num: 50 }));
-    }, 100)
+    }, 500);
 
 });
 
