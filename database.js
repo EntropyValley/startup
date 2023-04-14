@@ -17,7 +17,7 @@ const client = new MongoClient(url);
 
 // Database Collections
 const userCollection = client.db('startup').collection('user');
-const messageCollection = client.db('startup').collection('user');
+const messageCollection = client.db('startup').collection('messages');
 
 // Get a user from the database based on username
 function getUser(username) {
@@ -44,25 +44,37 @@ async function createUser(username, password) {
 }
 
 // Store a message in the database and generate a client-safe representation
-async function createMessage(username, anonymous, content, epoch) {
+async function createMessage(username, anonymous = false, content, epoch) {
     const message = { username: username, anonymous: anonymous, content: content, datetime: epoch };
+    const anonymousMessage = { username: 'Anonymous', anonymous: anonymous, content: content, datetime: epoch };
     await messageCollection.insertOne(message);
 
-    // Anonymize data sent to client
-    if (!anonymous) {
-        return message
-    } else {
-        return { username: null, anonymous: true, content: content, datetime: epoch };
-    }
+    return [message, anonymousMessage]
 }
 
 // Get the latest `num` messages from the database
-function getMessages(num = 15) {
-    const query = {}
+function getMessages(num = 15, opts = { before: Infinity, after: 0 }) {
+    const query = {
+        $and: [
+            {
+                datetime: {
+                    $gt: opts.after
+                }
+            },
+            {
+                datetime: {
+                    $lt: opts.before
+                }
+            }
+        ]
+    };
     const options = {
-        sort: { datetime: -1 },
+        sort: {
+            datetime: -1
+        },
         limit: num
     }
+
     const cursor = messageCollection.find(query, options);
     return cursor.toArray();
 }
