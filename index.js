@@ -27,19 +27,24 @@ apiRouter.post('/auth/create', async (req, res) => {
     } else {
         const user = await DB.createUser(req.body.username, req.body.password);
 
+        console.log(user.session);
+
         setAuthCookie(res, user.session); // Set Auth Cookie
 
-        res.send({ id: user._id });
+        res.send({});
     }
 });
 
 // Get session token for the provided credentials
 apiRouter.post('/auth/login', async (req, res) => {
     const user = await DB.getUser(req.body.username);
+    
+    console.log(user.session);
+    
     if (user) {
         if (await bcrypt.compare(req.body.password, user.password)) {
             setAuthCookie(res, user.session);
-            res.send({ id: user._id });
+            res.send({});
             return;
         }
     }

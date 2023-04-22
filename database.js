@@ -1,32 +1,29 @@
-const { MongoClient } = require('mongodb');
+const { AceBase } = require('acebase');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 
-// MongoDB Credentials
-const userName = process.env.MONGOUSER;
-const password = process.env.MONGOPASSWORD;
-const hostname = process.env.MONGOHOSTNAME;
-
-if (!userName) {
-    throw Error('Database not configured. Set Environment Variables');
-}
-
-// Connect to MongoDB
-const url = `mongodb+srv://${userName}:${password}@${hostname}`;
-const client = new MongoClient(url);
+const db = new AceBase('database');
 
 // Database Collections
-const userCollection = client.db('startup').collection('user');
-const messageCollection = client.db('startup').collection('messages');
+const userPath = 'users';
+const messagePath = 'messages';
 
 // Get a user from the database based on username
-function getUser(username) {
-    return userCollection.findOne({ username: username });
+async function getUser(username) {
+    return (await db.query(userPath)
+        .filter('username', '==', username)
+        .take(1)
+        .get())
+        .getValues()[0];
 }
 
 // Get a user from the database based on session token
-function getUserBySession(session) {
-    return userCollection.findOne({ session: session });
+async function getUserBySession(session) {
+    return (await db.query(userPath)
+        .filter('session', '==', session)
+        .take(1)
+        .get())
+        .getValues()[0];
 }
 
 // Create a user and assign a session token
@@ -38,7 +35,10 @@ async function createUser(username, password) {
         password: passwordHash,
         session: uuid.v4(),
     };
-    await userCollection.insertOne(user);
+
+    console.log(user)
+
+    db.ref(userPath).push(user);
 
     return user;
 }
@@ -47,36 +47,21 @@ async function createUser(username, password) {
 async function createMessage(username, anonymous = false, content, epoch) {
     const message = { username: username, anonymous: anonymous, content: content, datetime: epoch };
     const anonymousMessage = { username: 'Anonymous', anonymous: anonymous, content: content, datetime: epoch };
-    await messageCollection.insertOne(message);
-
+    
+    db.ref(messagePath).push(message);
+    
     return [message, anonymousMessage]
 }
 
 // Get the latest `num` messages from the database
-function getMessages(num = 15, opts = { before: Infinity, after: 0 }) {
-    const query = {
-        $and: [
-            {
-                datetime: {
-                    $gt: opts.after
-                }
-            },
-            {
-                datetime: {
-                    $lt: opts.before
-                }
-            }
-        ]
-    };
-    const options = {
-        sort: {
-            datetime: -1
-        },
-        limit: num
-    }
-
-    const cursor = messageCollection.find(query, options);
-    return cursor.toArray();
+async function getMessages(num = 15, opts = { before: Infinity, after: 0 }) {
+    return (await db.query(messagePath)
+        .filter('datetime', '>', opts.after)
+        .filter('datetime', '<', opts.before)
+        .sort('datetime', false)
+        .take(num)
+        .get())
+        .getValues();
 }
 
 module.exports = {
